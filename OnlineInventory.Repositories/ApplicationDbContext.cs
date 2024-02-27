@@ -12,6 +12,15 @@ namespace OnlineInventory.Repositories
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UserDetailsModel>()
+                .HasOne(e => e.User)
+                .WithOne(e => e.UserDetails)
+                .HasForeignKey<UserModel>(e => e.Id)
+                .IsRequired();
+        }
+
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserDetailsModel> UsersDetails { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
