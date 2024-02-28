@@ -11,8 +11,9 @@ namespace OnlineInventory.Models
     {
         [Key]
         public int PermissionId { get; set; }
-        public RoleModel? Role { get; set; }
+        public int RoleId { get; set; }
         public string? PermissionName { get; set; }
         public string? Module {  get; set; }
+        public virtual RoleModel? Role { get; set; }
     }
 }

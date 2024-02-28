@@ -13,7 +13,7 @@ namespace OnlineInventory.Models
         public int RoleId { get; set; }
         public string? RoleName { get; set; }
         public string? RoleDescription { get; set; }
-        public ICollection<UserModel>? Users { get; set; }
-        public ICollection<PermissionModel>? Permissions { get; set; }
+        public virtual ICollection<UserModel>? Users { get; set; }
+        public virtual ICollection<PermissionModel>? Permissions { get; set; }
     }
 }

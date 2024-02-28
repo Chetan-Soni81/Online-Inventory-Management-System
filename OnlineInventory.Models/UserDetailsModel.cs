@@ -16,6 +16,7 @@ namespace OnlineInventory.Models
         public string? MobileNo { get; set; }
         public string? Email { get; set; }
         public string? Address { get; set; }
-        public UserModel? User { get; set; }
+        public int UserId { get; set; }
+        public virtual UserModel? User { get; set; }
     }
 }

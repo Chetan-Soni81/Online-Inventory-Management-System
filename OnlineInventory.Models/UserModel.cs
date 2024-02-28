@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -13,7 +14,9 @@ namespace OnlineInventory.Models
         public int Id { get; set; }
         public string? Username { get; set; }
         public string? Password { get; set; }
-        public RoleModel? Role { get; set; }
-        public UserDetailsModel? UserDetails { get; set; }
+        public int RoleId { get; set; }
+        public int UserDetailId { get; set; }
+        public virtual RoleModel? Role { get; set; }
+        public virtual UserDetailsModel? UserDetails { get; set; }
     }
 }
