@@ -6,7 +6,6 @@
 }
 @model LoginViewModel
 
-<div class="col-lg-4 col-md-6 col-12 border p-3">
     <form method="post" asp-action="Login">
         <h3 class="text-center">Login Form</h3>
         <div class="mb-3">
@@ -27,7 +26,6 @@
             <button type="submit" class="btn btn-success">Login</button>
         </div>
         <div class="text-center">
-            <a href="" data-ajax="true" data-ajax-url="/Home/Register"  data-ajax-update="#formPanel"
+            Not a User? <a href="#" data-ajax="true" data-ajax-url="/Home/Register" data-ajax-update="#formPanel">Register Here</a>
         </div>
     </form>
-</div>

@@ -17,10 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OnlineInventory.Models\OnlineInventory.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="User\" />
+    <ProjectReference Include="..\OnlineInventory.ViewModels\OnlineInventory.ViewModels.csproj" />
   </ItemGroup>
 
 </Project>

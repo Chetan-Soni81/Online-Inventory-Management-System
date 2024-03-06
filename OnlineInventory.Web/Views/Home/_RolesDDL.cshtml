@@ -1,0 +1,9 @@
+﻿@using OnlineInventory.ViewModels
+@model IEnumerable<RoleViewModel>
+
+<select >
+    <option value="0">--Select a Role--</option>
+    @foreach (var item in Model) {
+        <option value="@item.RoleId"></option>
+    }
+</select>

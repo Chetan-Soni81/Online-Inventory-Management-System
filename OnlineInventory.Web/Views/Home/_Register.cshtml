@@ -1,13 +1,13 @@
-﻿@*
+﻿@using OnlineInventory.ViewModels;
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 
-@model LoginViewModel
+@model RegisterViewModel
 
-<div class="col-lg-4 col-md-6 col-12 border p-3">
-    <form method="post" asp-action="Login">
+    <form method="post" asp-action="Login" data-ajax="true" data-ajax-update="#formPanel">
         <h3 class="text-center">Login Form</h3>
         <div class="mb-3">
             <label asp-for=Username class="form-label"></label>
@@ -19,15 +19,18 @@
             <input asp-for="Password" class="form-control" placeholder="Password" />
             <span asp-validation-for="Password" class="text-danger"></span>
         </div>
-        <div class="form-check mb-3">
-            <input type="checkbox" class="form-check-input" asp-for="RememberMe" />
-            <label asp-for="RememberMe" class="form-check-label">Remember Me</label>
+        <div class="mb-3">
+            <label asp-for="RoleId" class="form-label">Role</label>
+            <select asp-for="RoleId" class="form-select" id="roleDDL"></select>
         </div>
         <div class="mb-3">
             <button type="submit" class="btn btn-success">Login</button>
         </div>
         <div class="text-center">
-            <a href="" data-ajax="true" data-ajax-url="/Home/Register" data-ajax-update="#formPanel"
+           Already registered? <a href="#" data-ajax="true" data-ajax-url="/Home/Login" data-ajax-update="#formPanel">Login here</a>
         </div>
     </form>
-</div>
+
+<script>
+    $("#roleDDL").load("/home/roles");
+</script>
