@@ -1,5 +1,46 @@
-﻿@*
+﻿@using OnlineInventory.ViewModels
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
+
+@model RegisterDetailViewModel
+
+<form method="post" asp-action="Login" data-ajax="true" data-ajax-update="#formPanel">
+    <h3 class="text-center">Registration Form</h3>
+
+    <div class="mb-3">
+        <label class="form-label"></label>
+        <div class="row">
+            <div class="col">
+                <input asp-for=FirstName class="form-control" placeholder="Username" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <input asp-for="LastName" class="form-control" placeholder="Username" />
+            </div>
+        </div>
+    </div>
+    <div class="mb-3">
+        <label asp-for="MobileNo" class="form-label"></label>
+        <input asp-for="MobileNo" type="tel" class="form-control" placeholder="Password" />
+        <span asp-validation-for="MobileNo" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Email" class="form-label">Role</label>
+        <input asp-for="Email" class="form-control" type="email" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Address" class="form-label"></label>
+        <textarea asp-for="Address" class="form-control" rows="3"></textarea>
+        <span asp-validation-for="Address" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-success">Login</button>
+    </div>
+    <div class="text-center">
+        Already registered? <a href="#" data-ajax="true" data-ajax-url="/Home/Login" data-ajax-update="#formPanel">Login here</a>
+    </div>
+</form>
