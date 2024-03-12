@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OnlineInventory.Repositories.Role;
+using OnlineInventory.Repositories.User;
 using OnlineInventory.ViewModels;
 using OnlineInventory.Web.Models;
 using System.Diagnostics;
@@ -10,10 +11,12 @@ namespace OnlineInventory.Web.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IRoleRepository _roleRepo;
-        public HomeController(ILogger<HomeController> logger, IRoleRepository roleRepo)
+        private readonly IUserRepository _userRepo;
+        public HomeController(ILogger<HomeController> logger, IRoleRepository roleRepo, IUserRepository userRepo)
         {
             _logger = logger;
             _roleRepo = roleRepo;
+            _userRepo = userRepo;
         }
 
         public IActionResult Index()
@@ -35,7 +38,7 @@ namespace OnlineInventory.Web.Controllers
 
         [HttpPost]
         public IActionResult Login(LoginViewModel model) {
-            return RedirectToAction();
+            return RedirectToAction("Index");
         }
 
 
@@ -45,9 +48,39 @@ namespace OnlineInventory.Web.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        [HttpGet] public IActionResult Register() {
+        [HttpGet] 
+        public IActionResult Register() {
             var register = new RegisterViewModel();
             return PartialView("_Register", register);
+        }
+        [HttpPost]
+        public IActionResult Register(RegisterViewModel model)
+        {
+            if (!ModelState.IsValid) {
+                return PartialView("_Register", ModelState);
+            }
+
+            var id = _userRepo.CreateUser(model);
+
+            if (id == 0) return PartialView("_Register", ModelState);
+
+            var details = new RegisterDetailViewModel { UserId = id };
+            return PartialView("_Register2", details);
+        }
+
+        [HttpPost]
+        public IActionResult Register2(RegisterDetailViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_Register2", ModelState);
+            }
+
+            var id = _userRepo.CreateUserDetails(model);
+
+            if (id == 0) return PartialView("_Register", new RegisterViewModel());
+
+            return PartialView("_Login", new LoginViewModel());
         }
 
         public IActionResult Roles()

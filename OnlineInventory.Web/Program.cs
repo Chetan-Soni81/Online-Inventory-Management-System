@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OnlineInventory.Repositories;
 using OnlineInventory.Repositories.Role;
+using OnlineInventory.Repositories.User;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 );
 
 builder.Services.AddTransient<IRoleRepository, RoleRepository>();
+builder.Services.AddTransient<IUserRepository, UserRepository>();
 
 var app = builder.Build();
 
