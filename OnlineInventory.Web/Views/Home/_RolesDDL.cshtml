@@ -4,6 +4,6 @@
 <select >
     <option value="0">--Select a Role--</option>
     @foreach (var item in Model) {
-        <option value="@item.RoleId"></option>
+        <option value="@item.RoleId">@item.RoleName</option>
     }
 </select>
