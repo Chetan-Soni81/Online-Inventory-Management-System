@@ -11,7 +11,7 @@ using OnlineInventory.Repositories;
 namespace OnlineInventory.Repositories.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240304171252_initialize")]
+    [Migration("20240312114222_initialize")]
     partial class initialize
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

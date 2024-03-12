@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace OnlineInventory.Models
 {
+    [Table("tbl_category")]
     public class CategoryModel
     {
         public int CategoryId { get; set; }

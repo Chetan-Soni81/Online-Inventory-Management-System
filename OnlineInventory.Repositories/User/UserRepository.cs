@@ -55,7 +55,8 @@ namespace OnlineInventory.Repositories.User
                 _context.SaveChanges();
 
                 return userDetails.UserDetailId;
-            } catch
+            } 
+            catch
             {
                 return 0;
             }
