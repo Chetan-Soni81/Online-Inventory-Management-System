@@ -17,7 +17,6 @@ namespace OnlineInventory.Models
         public string? Username { get; set; }
         public string? Password { get; set; }
         public int RoleId { get; set; }
-        public int UserDetailId { get; set; }
         public virtual RoleModel? Role { get; set; }
         public virtual UserDetailsModel? UserDetails { get; set; }
     }

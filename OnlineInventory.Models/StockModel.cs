@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,7 @@ namespace OnlineInventory.Models
     [Table("tbl_stock")]
     public class StockModel
     {
+        [Key]
         public int StockId { get; set; }
         public int ProductId { get; set; }
         public int Quantity { get; set; }

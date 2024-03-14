@@ -14,25 +14,16 @@ namespace OnlineInventory.Repositories
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<UserDetailsModel>()
-                .HasOne(e => e.User)
-                .WithOne(e => e.UserDetails)
-                .HasForeignKey<UserModel>(e => e.Id);
-
-            modelBuilder.Entity<UserModel>()
-                .HasOne(e => e.Role)
-                .WithMany(e => e.Users)
-                .HasForeignKey(e => e.RoleId);
-
-            modelBuilder.Entity<RoleModel>()
-                .HasMany(e => e.Permissions)
-                .WithOne(e => e.Role)
-                .HasForeignKey(e => e.RoleId);
         }
 
         public DbSet<UserModel> Users { get; set; }
         public DbSet<UserDetailsModel> UsersDetails { get; set; }
         public DbSet<RoleModel> Roles { get; set; }
         public DbSet<PermissionModel> Permissions { get; set; }
+        public DbSet<CategoryModel> Categories { get; set; }
+        public DbSet<ProductModel> Products { get; set; }
+        public DbSet<SupplierModel> Suppliers { get; set; }
+        public DbSet<WarehouseModel> Warehouses { get; set; }
+        public DbSet<StockModel> Stocks { get; set; }
     }
 }
