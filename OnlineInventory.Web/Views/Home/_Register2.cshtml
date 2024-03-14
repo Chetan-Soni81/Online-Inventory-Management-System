@@ -7,12 +7,13 @@
 
 @model RegisterDetailViewModel
 
-<form method="post" asp-action="Login" data-ajax="true" data-ajax-update="#formPanel">
+<form method="post" asp-action="Register2" data-ajax="true" data-ajax-update="#formPanel">
     <h3 class="text-center">Registration Form</h3>
-
+    <input asp-for="UserId" class="form-control d-none" readonly />
     <div class="mb-3">
         <label class="form-label"></label>
         <div class="row">
+            <label class="form-label">Name</label>
             <div class="col">
                 <input asp-for=FirstName class="form-control" placeholder="Username" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
@@ -28,7 +29,7 @@
         <span asp-validation-for="MobileNo" class="text-danger"></span>
     </div>
     <div class="mb-3">
-        <label asp-for="Email" class="form-label">Role</label>
+        <label asp-for="Email" class="form-label"></label>
         <input asp-for="Email" class="form-control" type="email" />
         <span asp-validation-for="Email" class="text-danger"></span>
     </div>

@@ -61,11 +61,21 @@ namespace OnlineInventory.Repositories.User
                 return 0;
             }
         }
+
+        public int LoginUser(LoginViewModel model)
+        {
+            try
+            {
+                var userid = _context.Users.Where(e => e.Username == model.Username && e.Password == model.Password).Select(s => s.Id).FirstOrDefault();
+                return userid;
+            } catch { return 0; }
+        }
     }
 
     public interface IUserRepository
     {
         public int CreateUser(RegisterViewModel model);
         public int CreateUserDetails(RegisterDetailViewModel model);
+        public int LoginUser(LoginViewModel model);
     }
 }

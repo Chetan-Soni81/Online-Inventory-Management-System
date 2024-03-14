@@ -38,6 +38,18 @@ namespace OnlineInventory.Web.Controllers
 
         [HttpPost]
         public IActionResult Login(LoginViewModel model) {
+            if(!ModelState.IsValid)
+            {
+                return PartialView("_Login", model);
+            }
+
+            var id = _userRepo.LoginUser(model);
+
+            if (id == 0) { 
+                model.ErrorMessage = "* Invalid Credentials";
+                return PartialView("_Login", model);
+            }
+
             return RedirectToAction("Index");
         }
 
@@ -57,12 +69,12 @@ namespace OnlineInventory.Web.Controllers
         public IActionResult Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid) {
-                return PartialView("_Register", ModelState);
+                return PartialView("_Register", model);
             }
 
             var id = _userRepo.CreateUser(model);
 
-            if (id == 0) return PartialView("_Register", ModelState);
+            if (id == 0) return PartialView("_Register", model);
 
             var details = new RegisterDetailViewModel { UserId = id };
             return PartialView("_Register2", details);
@@ -73,7 +85,7 @@ namespace OnlineInventory.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return PartialView("_Register2", ModelState);
+                return PartialView("_Register2", model);
             }
 
             var id = _userRepo.CreateUserDetails(model);
