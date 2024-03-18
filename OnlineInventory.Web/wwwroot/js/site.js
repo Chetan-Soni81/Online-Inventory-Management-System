@@ -2,3 +2,8 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+const hamburger = document.querySelector('#toggle-btn')
+
+$('#toggle-btn').on('click', function () {
+    $('#sidebar').toggleClass('expand')
+})
