@@ -2,6 +2,10 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+
+}
+@section Styles {
+    
 }
 
 <div class="wrapper">
@@ -18,17 +22,17 @@
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-user"></i>
-                    Profile
+                    <span>Profile</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-list-check"></i>
-                    Task
+                    <span>Task</span>
                 </a>
             </li>
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link  collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
+                <a href="#" class="sidebar-link has-dropdown collapsed" data-bs-toggle="collapse" data-bs-target="#auth"
                    aria-expanded="true" aria-controls="collapseOne">
                     <i class="fa-solid fa-shield"></i>
                     <span>Auth</span>
@@ -46,13 +50,13 @@
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-message"></i>
-                    Notification
+                    <span>Notification</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
                     <i class="fa-solid fa-gear"></i>
-                    Setting
+                    <span>Setting</span>
                 </a>
             </li>
         </ul>
@@ -64,7 +68,13 @@
 
         </div>
     </aside>
-    <div class="main">
+    <div class="main p-3">
         <div class="text-center"><h1>Sidebar Bootstrap</h1></div>
     </div>
 </div>
+
+@section Scripts {
+    <script>
+        $('header').remove();
+    </script>
+}

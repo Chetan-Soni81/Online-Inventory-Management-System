@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/OnlineInventory.Web.styles.css" asp-append-version="true" />
     <link href="~/font-awesome/css/all.min.css" rel="stylesheet" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
 <body>
     <header>
@@ -31,8 +32,8 @@
             </div>
         </nav>
     </header>
-    <div class="container-fluid">
-        <main role="main" class="pb-3">
+    <div class="container-fluid p-0 ">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
