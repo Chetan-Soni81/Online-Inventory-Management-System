@@ -6,7 +6,7 @@
 }
 @model LoginViewModel
 
-<form method="post" asp-action="Login" data-ajax="true" data-ajax-update="#formPanel">
+<form method="post" asp-action="Login" data-ajax="true" data-ajax-update="#formPanel" data-ajax-success="onSuccess">
     <h3 class="text-center">Login Form</h3>
     <div class="mb-3">
         <label asp-for=Username class="form-label"></label>
@@ -30,3 +30,14 @@
         Not a User? <a href="#" data-ajax="true" data-ajax-url="/Home/Register" data-ajax-update="#formPanel">Register Here</a>
     </div>
 </form>
+
+        <script>
+    function onSuccess(data) {
+        debugger;
+        if (data.redirect) {
+            window.location.href = data.redirect;
+        } else {
+            // Handle the response data if there's no redirect
+        }
+    }
+        </script>

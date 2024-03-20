@@ -1,5 +1,8 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using OnlineInventory.Repositories;
+using OnlineInventory.Repositories.Category;
+using OnlineInventory.Repositories.Product;
 using OnlineInventory.Repositories.Role;
 using OnlineInventory.Repositories.User;
 
@@ -14,6 +17,16 @@ builder.Services.AddDbContext<ApplicationDbContext>(
 
 builder.Services.AddTransient<IRoleRepository, RoleRepository>();
 builder.Services.AddTransient<IUserRepository, UserRepository>();
+builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
+builder.Services.AddTransient<IProductRepository, ProductRepository>();
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+    options =>
+    {
+        options.LoginPath = new PathString("/");
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
+    }
+);
 
 var app = builder.Build();
 

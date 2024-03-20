@@ -1,4 +1,5 @@
-﻿using OnlineInventory.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineInventory.Models;
 using OnlineInventory.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -62,13 +63,42 @@ namespace OnlineInventory.Repositories.User
             }
         }
 
-        public int LoginUser(LoginViewModel model)
+        public UserViewModel LoginUser(LoginViewModel model)
+        {
+            var user = new UserViewModel();
+                user.UserName = model.Username;
+            try
+            {
+                var obj = _context.Users.Where(e => e.Username == model.Username && e.Password == model.Password).Include(user => user.Role).Select(s => new { Id = s.Id, Role = s.Role!.RoleName }).FirstOrDefault();
+                if (obj == null) return user;
+                
+                user.UserId = obj.Id;
+                user.Role = obj.Role;
+                return user;
+            } catch { return user; }
+        }
+        public ProfileVIewModel GetUserProfile(int userId)
         {
             try
             {
-                var userid = _context.Users.Where(e => e.Username == model.Username && e.Password == model.Password).Select(s => s.Id).FirstOrDefault();
-                return userid;
-            } catch { return 0; }
+                var profile = _context.Users
+                    .Where(w => w.Id == userId)
+                    .Include(u => u.UserDetails)
+                    .Include(u => u.Role)
+                    .Select( s => new ProfileVIewModel{
+                        Username = s.Username,
+                        Name = $"{s.UserDetails!.FirstName} {s.UserDetails!.LastName}",
+                        MobileNo = s.UserDetails.MobileNo ?? "N/A",
+                        Email = s.UserDetails.Email ?? "N/A",
+                        Address = s.UserDetails.Address,
+                        Role = s.Role!.RoleDescription
+                    }).First();
+
+                return profile;
+            } catch
+            {
+                return new ProfileVIewModel();
+            }
         }
     }
 
@@ -76,6 +106,7 @@ namespace OnlineInventory.Repositories.User
     {
         public int CreateUser(RegisterViewModel model);
         public int CreateUserDetails(RegisterDetailViewModel model);
-        public int LoginUser(LoginViewModel model);
+        public UserViewModel LoginUser(LoginViewModel model);
+        public ProfileVIewModel GetUserProfile(int userId);
     }
 }
