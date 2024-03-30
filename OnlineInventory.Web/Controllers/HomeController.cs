@@ -50,7 +50,7 @@ namespace OnlineInventory.Web.Controllers
                 return PartialView("_Login", model);
             }
 
-            return RedirectToAction("Index");
+            return Ok("<script>document.location.pathname = '/admin';</script>");
         }
 
 
