@@ -41,6 +41,19 @@ namespace OnlineInventory.Web.Controllers
             return PartialView("_Profile", model);
         }
 
+        public IActionResult Category()
+        {
+            var categories = _categoryRepo.GetAllCategories();
+            return PartialView("_Category", categories);
+        }
+
+        [HttpGet]
+        public IActionResult AddCategory()
+        {
+            var model = new CategoryViewModel();
+            return PartialView("_AddCategory", model);
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();

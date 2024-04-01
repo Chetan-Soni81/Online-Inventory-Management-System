@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OnlineInventory.Models;
+using OnlineInventory.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,10 +20,66 @@ namespace OnlineInventory.Repositories.Category
         {
             return _context.Categories.Count();
         }
+
+        public int CreateCategory(string categoryName)
+        {
+            try
+            {
+                var category = new CategoryModel { CategoryName = categoryName };
+                _context.Categories.Add(category);
+                _context.SaveChanges();
+                return category.CategoryId;
+            } catch
+            {
+                return 0;
+            }
+        }
+
+        public int UpdateCategory(CategoryViewModel model)
+        {
+            try
+            {
+                var category = _context.Categories.FirstOrDefault(x => x.CategoryId == model.CategoryID);
+
+                if (category == null) return 0;
+                category.CategoryName = model.CategoryName;
+                _context.Categories.Update(category);
+                _context.SaveChanges();
+                return category.CategoryId;
+            } catch
+            {
+                return 0;
+            }
+        }
+
+        public List<CategoryViewModel> GetAllCategories()
+        {
+            var categories = _context.Categories.Select(s => new CategoryViewModel
+            {
+                CategoryID = s.CategoryId,
+                CategoryName = s.CategoryName,
+            }).OrderBy(x => x.CategoryID).ToList();
+
+            return categories;
+        }
+
+        public CategoryViewModel GetCategoryById(int id)
+        {
+            var category = _context.Categories.Where(x => x.CategoryId == id).Select(s => new CategoryViewModel
+            {
+                CategoryID = s.CategoryId,
+                CategoryName = s.CategoryName,
+            }).First();
+            return category;
+        }
     }
 
     public interface ICategoryRepository
     {
         public int CountCategories();
+        public int CreateCategory(string categoryName);
+        public int UpdateCategory(CategoryViewModel category);
+        public List<CategoryViewModel> GetAllCategories();
+        public CategoryViewModel GetCategoryById(int id);
     }
 }

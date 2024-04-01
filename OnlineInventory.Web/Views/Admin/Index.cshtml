@@ -20,15 +20,15 @@
         </div>
         <ul class="sidebar-nav">
             <li class="sidebar-item">
-                <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-user"></i>
-                    <span>Profile</span>
+                <a href class="sidebar-link" data-ajax="true" data-ajax-url="/Admin/Category" data-ajax-update="#mainFrame">
+                    <i class="fa-solid fa-layer-group"></i>
+                    <span>Category</span>
                 </a>
             </li>
             <li class="sidebar-item">
                 <a href="#" class="sidebar-link">
-                    <i class="fa-solid fa-list-check"></i>
-                    <span>Task</span>
+                    <i class="fa-solid fa-boxes-stacked"></i>
+                    <span>Product</span>
                 </a>
             </li>
             <li class="sidebar-item">
@@ -71,6 +71,7 @@
     <div class="main p-3" id="mainFrame">
     </div>
 </div>
+<div id="modelPopupBox"></div>
 
 @section Scripts {
     <script>
