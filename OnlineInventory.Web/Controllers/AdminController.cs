@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using OnlineInventory.Repositories.Category;
 using OnlineInventory.Repositories.Product;
@@ -7,6 +8,7 @@ using OnlineInventory.ViewModels;
 
 namespace OnlineInventory.Web.Controllers
 {
+    [Authorize(Roles = "ADMIN")]
     public class AdminController : Controller
     {
         private readonly ICategoryRepository _categoryRepo;
@@ -37,6 +39,12 @@ namespace OnlineInventory.Web.Controllers
         {
             var model = new ProfileVIewModel();
             return PartialView("_Profile", model);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }
