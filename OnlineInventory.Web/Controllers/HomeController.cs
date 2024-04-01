@@ -1,12 +1,9 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OnlineInventory.Repositories.Role;
 using OnlineInventory.Repositories.User;
 using OnlineInventory.ViewModels;
 using OnlineInventory.Web.Models;
 using System.Diagnostics;
-using System.Security.Claims;
 
 namespace OnlineInventory.Web.Controllers
 {
@@ -40,37 +37,20 @@ namespace OnlineInventory.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model) {
+        public IActionResult Login(LoginViewModel model) {
             if(!ModelState.IsValid)
             {
                 return PartialView("_Login", model);
             }
 
-            var user = _userRepo.LoginUser(model);
+            var id = _userRepo.LoginUser(model);
 
-            if (user.UserId == 0) { 
+            if (id == 0) { 
                 model.ErrorMessage = "* Invalid Credentials";
                 return PartialView("_Login", model);
             }
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Name, user.UserName!),
-                new Claim(ClaimTypes.Role, user.Role!),
-                new Claim("UserID", user.UserId.ToString())
-            };
-
-            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var properties = new AuthenticationProperties
-            {
-                AllowRefresh = true,
-                IsPersistent = model.RememberMe,
-            };
-
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme,new ClaimsPrincipal(identity), properties);
-
-            return Redirect("/Admin");
+            return Ok("<script>document.location.pathname = '/admin';</script>");
         }
 
 
@@ -111,7 +91,6 @@ namespace OnlineInventory.Web.Controllers
             var id = _userRepo.CreateUserDetails(model);
 
             if (id == 0) return PartialView("_Register", new RegisterViewModel());
-
 
             return PartialView("_Login", new LoginViewModel());
         }
