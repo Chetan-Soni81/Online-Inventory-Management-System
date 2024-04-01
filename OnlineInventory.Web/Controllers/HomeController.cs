@@ -45,7 +45,7 @@ namespace OnlineInventory.Web.Controllers
 
             var id = _userRepo.LoginUser(model);
 
-            if (id == 0) { 
+            if (id.UserId == 0) { 
                 model.ErrorMessage = "* Invalid Credentials";
                 return PartialView("_Login", model);
             }
