@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
 using OnlineInventory.Repositories.Role;
 using OnlineInventory.Repositories.User;
 using OnlineInventory.ViewModels;
 using OnlineInventory.Web.Models;
 using System.Diagnostics;
+using System.Security.Claims;
 
 namespace OnlineInventory.Web.Controllers
 {
@@ -37,7 +40,7 @@ namespace OnlineInventory.Web.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login(LoginViewModel model) {
+        public async Task<IActionResult> Login(LoginViewModel model) {
             if(!ModelState.IsValid)
             {
                 return PartialView("_Login", model);
@@ -49,6 +52,23 @@ namespace OnlineInventory.Web.Controllers
                 model.ErrorMessage = "* Invalid Credentials";
                 return PartialView("_Login", model);
             }
+
+            List<Claim> claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Name, id.UserName ?? ""),
+                new Claim(ClaimTypes.Role, id.Role ?? "USER"),
+                new Claim("UserID", id.UserId.ToString())
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var properties = new AuthenticationProperties
+            {
+                AllowRefresh = true,
+                IsPersistent = model.RememberMe,
+            };
+
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity), properties);
 
             return Ok("<script>document.location.pathname = '/admin';</script>");
         }
