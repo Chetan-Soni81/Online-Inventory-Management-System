@@ -54,6 +54,19 @@ namespace OnlineInventory.Web.Controllers
             return PartialView("_AddCategory", model);
         }
 
+        [HttpPost]
+        public IActionResult AddCategory(CategoryViewModel model)
+        {
+            if(ModelState.IsValid)
+            {
+                return PartialView("_AddCategory", ModelState);
+            }
+
+            _categoryRepo.CreateCategory(model.CategoryName);
+
+            return RedirectToAction("Index");
+        }
+
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
