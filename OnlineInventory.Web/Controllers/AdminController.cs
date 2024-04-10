@@ -41,32 +41,6 @@ namespace OnlineInventory.Web.Controllers
             return PartialView("_Profile", model);
         }
 
-        public IActionResult Category()
-        {
-            var categories = _categoryRepo.GetAllCategories();
-            return PartialView("_Category", categories);
-        }
-
-        [HttpGet]
-        public IActionResult AddCategory()
-        {
-            var model = new CategoryViewModel();
-            return PartialView("_AddCategory", model);
-        }
-
-        [HttpPost]
-        public IActionResult AddCategory(CategoryViewModel model)
-        {
-            if(ModelState.IsValid)
-            {
-                return PartialView("_AddCategory", ModelState);
-            }
-
-            _categoryRepo.CreateCategory(model.CategoryName);
-
-            return RedirectToAction("Index");
-        }
-
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
