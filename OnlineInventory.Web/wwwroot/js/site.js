@@ -26,6 +26,7 @@ $(function () {
     })
 
     modelPopupBox.on('click', '[data-save="modal"]', function (event) {
+        debugger;
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
         var sendData = form.serialize();

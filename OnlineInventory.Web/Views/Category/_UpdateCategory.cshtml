@@ -16,9 +16,9 @@
             </div>
 
             <div class="modal-body">
-                <form action="create" method="post">
+                <form asp-action="UpdateCategory" asp-route-id="" method="post">
                     <div class="form-group">
-                        <input asp-for="CategoryID" class="d-none" />
+                        <input asp-for="CategoryID" class="d-none" readonly />
                     </div>
                     <div class="form-group">
                         <label asp-for="CategoryName" class="form-label">Category Name</label>

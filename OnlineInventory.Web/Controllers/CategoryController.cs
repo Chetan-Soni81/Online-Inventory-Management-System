@@ -42,16 +42,16 @@ namespace OnlineInventory.Web.Controllers
         }
 
         [HttpGet]
-        public IActionResult UpdateCategory()
+        public IActionResult UpdateCategory(int id)
         {
-            var model = new CategoryViewModel();
+            var model = _categoryRepo.GetCategoryById(id);
             return PartialView("_UpdateCategory", model);
         }
 
         [HttpPost]
         public IActionResult UpdateCategory(CategoryViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return PartialView("_UpdateCategory", ModelState);
             }
@@ -64,6 +64,7 @@ namespace OnlineInventory.Web.Controllers
         [HttpGet]
         public IActionResult DeleteCategory(int id)
         {
+            _categoryRepo.DeleteCategory(id);
             return RedirectToAction("Index");
         }
     }
