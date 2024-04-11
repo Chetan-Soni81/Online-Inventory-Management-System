@@ -52,12 +52,29 @@ namespace OnlineInventory.Repositories.Category
             }
         }
 
+        public int DeleteCategory(int id)
+        {
+            try
+            {
+                var category = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+
+                if (category == null) return 0;
+                _context.Categories.Remove(category);
+                _context.SaveChanges();
+                return 1;
+            }
+            catch
+            {
+                return 0;
+            }
+        }
+
         public List<CategoryViewModel> GetAllCategories()
         {
             var categories = _context.Categories.Select(s => new CategoryViewModel
             {
                 CategoryID = s.CategoryId,
-                CategoryName = s.CategoryName,
+                CategoryName = s.CategoryName ?? "UnNamed",
             }).OrderBy(x => x.CategoryID).ToList();
 
             return categories;
@@ -79,6 +96,7 @@ namespace OnlineInventory.Repositories.Category
         public int CountCategories();
         public int CreateCategory(string categoryName);
         public int UpdateCategory(CategoryViewModel category);
+        public int DeleteCategory(int id);
         public List<CategoryViewModel> GetAllCategories();
         public CategoryViewModel GetCategoryById(int id);
     }

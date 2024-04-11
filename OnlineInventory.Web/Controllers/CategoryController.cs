@@ -18,7 +18,7 @@ namespace OnlineInventory.Web.Controllers
         public IActionResult Index()
         {
             var categories = _categoryRepo.GetAllCategories();
-            return PartialView("_Category", categories);
+            return View(categories);
         }
 
         [HttpGet]
@@ -31,12 +31,12 @@ namespace OnlineInventory.Web.Controllers
         [HttpPost]
         public IActionResult AddCategory(CategoryViewModel model)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return PartialView("_AddCategory", ModelState);
             }
 
-            _categoryRepo.CreateCategory(model.CategoryName);
+            var i = _categoryRepo.CreateCategory(model.CategoryName);
 
             return RedirectToAction("Index");
         }
@@ -58,6 +58,12 @@ namespace OnlineInventory.Web.Controllers
 
             _categoryRepo.UpdateCategory(model);
 
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public IActionResult DeleteCategory(int id)
+        {
             return RedirectToAction("Index");
         }
     }

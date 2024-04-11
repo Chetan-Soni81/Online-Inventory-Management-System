@@ -23,7 +23,10 @@ namespace OnlineInventory.Web.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var model = new HomeModel();
+            model.Products = _productRepo.CountProducts();
+            model.Categories = _categoryRepo.CountCategories();
+            return View(model);
         }
 
         public IActionResult Home()

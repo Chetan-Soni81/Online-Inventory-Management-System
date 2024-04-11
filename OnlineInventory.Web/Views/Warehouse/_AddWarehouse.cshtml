@@ -4,3 +4,41 @@
 @{
     Layout = null;
 }
+@model WarehouseViewModel
+
+<div class="modal fade" id="addCourse">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Warehouse</h4>
+                <button type="button" class="btn-close" data-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form action="create" method="post">
+                    <div class="form-group">
+                        <label asp-for="WarehouseName" class="form-label">Warehouse Name</label>
+                        <input asp-for="WarehouseName" class="form-control" placeholder="Warehouse Name" />
+                        <span asp-validation-for="WarehouseName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="City" class="form-label">City</label>
+                        <input asp-for="City" class="form-control" placeholder="City" />
+                        <span asp-validation-for="City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Country" class="form-label">Country</label>
+                        <input asp-for="Country" class="form-control" placeholder="Country" />
+                        <span asp-validation-for="Country" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
