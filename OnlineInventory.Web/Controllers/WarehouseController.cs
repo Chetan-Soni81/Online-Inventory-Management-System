@@ -19,7 +19,7 @@ namespace OnlineInventory.Web.Controllers
         public IActionResult Index()
         {
             var warehouses = _repo.GetAllWarehouses();
-            return PartialView("_Warehouse",warehouses);
+            return View(warehouses);
         }
 
         [HttpGet]

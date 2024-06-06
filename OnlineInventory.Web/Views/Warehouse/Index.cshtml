@@ -1,0 +1,48 @@
+﻿@using OnlineInventory.ViewModels;
+@{
+    ViewData["Title"] = "Warehouses";
+}
+@model IEnumerable<WarehouseViewModel>
+
+<h3 class="text-center">Warehouses</h3>
+<div class="d-flex mb-3">
+    <button data-toggle="ajax-modal" data-target="#addCourse" data-url='@Url.Action("AddWarehouse")' class="btn btn-primary"><i class="fa-solid fa-add"></i> Add Warehouse</button>
+</div>
+<div class="responsive-table">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th>Warehouse ID</th>
+                <th>Warehouse Name</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr style="vertical-align: central">
+                        <td>@item.WarehouseId</td>
+                        <td>@item.WarehouseName</td>
+                        <td>@item.City</td>
+                        <td>@item.Country</td>
+                        <td>
+                            <button data-toggle="ajax-modal" data-target="#addCourse" data-url='@Url.Action("UpdateWarehouse", new { id = item.WarehouseId })' class=" btn btn-sm btn-warning text-white"><i class="fa-solid fa-edit"></i></button>
+                            &nbsp;
+                            <a asp-action="DeleteWarehouse" asp-route-id="@item.WarehouseId" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5" class="text-center p-3">No Warehouses found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

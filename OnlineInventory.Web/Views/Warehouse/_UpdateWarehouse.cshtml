@@ -10,13 +10,13 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Warehouse</h4>
+                <h4 class="modal-title">Update Warehouse</h4>
                 <button type="button" class="btn-close" data-dismiss="modal">
                 </button>
             </div>
 
             <div class="modal-body">
-                <form action="create" method="post">
+                <form asp-action="UpdateWarehouse" method="post">
                     <div class="form-group">
                         <input asp-for="WarehouseId" class="d-none" readonly/>
                     </div>
