@@ -29,11 +29,28 @@ $(function () {
         debugger;
         var form = $(this).parents('.modal').find('form');
         var actionUrl = form.attr('action');
-        var sendData = form.serialize();
-        $.post(actionUrl, sendData).done(function (data) {
-            modelPopupBox.find('.modal').modal('hide');
-            location.reload();
-        })
+        var sendData = new FormData(form.get(0));
+
+        $.ajax({
+            url: actionUrl,
+            type: 'POST',
+            data: sendData,
+            processData: false, // Prevent jQuery from automatically processing the data
+            contentType: false, // Prevent jQuery from setting the Content-Type header
+            success: function (response) {
+                // Handle success response
+                modelPopupBox.find('.modal').modal('hide');
+                location.reload();
+            },
+            error: function (xhr, status, error) {
+                // Handle error
+                console.error('Error:', error);
+            }
+        });
+        //$.post(actionUrl, sendData).done(function (data) {
+        //    modelPopupBox.find('.modal').modal('hide');
+        //    location.reload();
+        //})
     })
 
     modelPopupBox.on('click', '[data-dismiss="modal"]', function (event) {

@@ -1,7 +1,11 @@
-﻿using OnlineInventory.ViewModels;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineInventory.Models;
+using OnlineInventory.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -15,9 +19,29 @@ namespace OnlineInventory.Repositories.Product
             _context = context;
         }
 
-        public Task<bool> AddProduct(ProductViewModel product)
+        public async Task<bool> AddProduct(ProductViewModel product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var record = new ProductModel
+                {
+                    ProductName = product.ProductName,
+                    ProductDescription = product.ProductDescription,
+                    ProductImage = product.ProductImage,
+                    Price = product.Price,
+                    CategoryId = product.CategoryId,
+                    SupplierId = product.SupplierId,
+                };
+
+                _context.Products.Add(record);
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
 
         public int CountProducts()
@@ -25,34 +49,125 @@ namespace OnlineInventory.Repositories.Product
             return _context.Products.Count();
         }
 
-        public Task<bool> DeleteProduct(int id)
+        public async Task<bool> DeleteProduct(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var product = await _context.Products.FirstOrDefaultAsync(w => w.ProductId == id);
+
+                if (product == null) return false;
+
+                _context.Products.Remove(product);
+                await _context.SaveChangesAsync();
+
+                return true;
+            } catch
+            {
+                return false;
+            }
         }
 
-        public Task<ProductViewModel> GetProductById(int id)
+        public async Task<ProductViewModel?> GetProductById(int id)
         {
-            throw new NotImplementedException();
+            var products = await _context.Products.Where(w => w.ProductId == id).Include(i => i.Category).Include(i => i.Supplier).Select(s =>
+            new ProductViewModel
+            {
+                ProductId = s.ProductId,
+                ProductName = s.ProductName,
+                ProductImage = s.ProductImage,
+                Price = s.Price,
+                ProductDescription = s.ProductDescription,
+                CategoryId = s.CategoryId,
+                SupplierId = s.SupplierId,
+                SupplierName = s.Supplier == null ? "" : s.Supplier.SupplierName,
+                CategoryName = s.Category == null ? "" : s.Category.CategoryName
+            }).FirstOrDefaultAsync();
+
+            return products;
         }
 
-        public Task<List<ProductViewModel>> GetProducts()
+        public async Task<List<ProductViewModel>> GetProducts()
         {
-            throw new NotImplementedException();
+            var products = await _context.Products.Include(i => i.Category).Include(i => i.Supplier).Select(s =>
+            new ProductViewModel
+            {
+                ProductId = s.ProductId,
+                ProductName = s.ProductName,
+                ProductImage = s.ProductImage,
+                Price = s.Price,
+                ProductDescription = s.ProductDescription,
+                CategoryId = s.CategoryId,
+                SupplierId = s.SupplierId,
+                SupplierName = s.Supplier!.SupplierName,
+                CategoryName = s.Category!.CategoryName
+            }).ToListAsync();
+
+            return products;
         }
 
-        public Task<List<ProductViewModel>> GetProductsByCategory(int id)
+        public async Task<List<ProductViewModel>> GetProductsByCategory(int id)
         {
-            throw new NotImplementedException();
+            var products = await _context.Products.Where(w => w.CategoryId == id).Include(i => i.Category).Include(i => i.Supplier).Select(s =>
+            new ProductViewModel
+            {
+                ProductId = s.ProductId,
+                ProductName = s.ProductName,
+                ProductImage = s.ProductImage,
+                Price = s.Price,
+                ProductDescription = s.ProductDescription,
+                CategoryId = s.CategoryId,
+                SupplierId = s.SupplierId,
+                SupplierName = s.Supplier == null ?  "" :  s.Supplier.SupplierName,
+                CategoryName = s.Category == null ? "" : s.Category.CategoryName
+            }).ToListAsync();
+
+            return products;
         }
 
-        public Task<List<ProductViewModel>> GetProductsBySupplier(int id)
+        public async Task<List<ProductViewModel>> GetProductsBySupplier(int id)
         {
-            throw new NotImplementedException();
+            var products = await _context.Products.Where(w => w.SupplierId == id).Include(i => i.Category).Include(i => i.Supplier).Select(s =>
+            new ProductViewModel
+            {
+                ProductId = s.ProductId,
+                ProductName = s.ProductName,
+                ProductImage = s.ProductImage,
+                Price = s.Price,
+                ProductDescription = s.ProductDescription,
+                CategoryId = s.CategoryId,
+                SupplierId = s.SupplierId,
+                SupplierName = s.Supplier == null ? "" : s.Supplier.SupplierName,
+                CategoryName = s.Category == null ? "" : s.Category.CategoryName
+            }).ToListAsync();
+
+            return products;
         }
 
-        public Task<bool> UpdateProduct(ProductViewModel product)
+        public async Task<bool> UpdateProduct(ProductViewModel product)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var record = await _context.Products.FirstOrDefaultAsync(w => w.ProductId == product.ProductId);
+
+                if (record == null) return false;
+
+                record.ProductName = product.ProductName;
+                record.ProductDescription = product.ProductDescription;
+                record.ProductImage = product.ProductImage;
+                record.Price = product.Price;
+                record.CategoryId = product.CategoryId;
+                record.SupplierId = product.SupplierId;
+
+                _context.Products.Update(record);
+
+                await _context.SaveChangesAsync();
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
     public interface IProductRepository
@@ -60,7 +175,7 @@ namespace OnlineInventory.Repositories.Product
         public int CountProducts();
 
         Task<List<ProductViewModel>> GetProducts();
-        Task<ProductViewModel> GetProductById(int id);
+        Task<ProductViewModel?> GetProductById(int id);
         Task<List<ProductViewModel>> GetProductsByCategory(int id);
         Task<List<ProductViewModel>> GetProductsBySupplier(int id);
         Task<bool> AddProduct(ProductViewModel product);

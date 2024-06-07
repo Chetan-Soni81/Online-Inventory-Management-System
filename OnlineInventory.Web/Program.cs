@@ -4,6 +4,8 @@ using OnlineInventory.Repositories;
 using OnlineInventory.Repositories.Category;
 using OnlineInventory.Repositories.Product;
 using OnlineInventory.Repositories.Role;
+using OnlineInventory.Repositories.Stock;
+using OnlineInventory.Repositories.Supplier;
 using OnlineInventory.Repositories.User;
 using OnlineInventory.Repositories.Warehouse;
 
@@ -21,6 +23,8 @@ builder.Services.AddTransient<IUserRepository, UserRepository>();
 builder.Services.AddTransient<ICategoryRepository, CategoryRepository>();
 builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IWarehouseRepository, WarehouseRepository>();
+builder.Services.AddTransient<IStockRepository, StockRepository>();
+builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     options =>

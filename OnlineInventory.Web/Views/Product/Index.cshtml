@@ -1,0 +1,52 @@
+﻿@using OnlineInventory.ViewModels;
+@{
+    ViewData["Title"] = "Products";
+}
+@model IEnumerable<ProductViewModel>
+
+<h3 class="text-center">Products</h3>
+<div class="d-flex mb-3">
+    <button data-toggle="ajax-modal" data-target="#addCourse" data-url='@Url.Action("AddProduct")' class="btn btn-primary"><i class="fa-solid fa-add"></i> Add Product</button>
+</div>
+<div class="responsive-table">
+    <table class="table table-bordered">
+        <thead>
+            <tr class="table-dark">
+                <th>Product ID</th>
+                <th>Product Name</th>
+                <th>Price</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Supplier</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Count() > 0)
+            {
+                @foreach (var item in Model)
+                {
+                    <tr style="vertical-align: central">
+                        <td>@item.ProductId</td>
+                        <td>@item.ProductName</td>
+                        <td>@item.Price</td>
+                        <td><img src="@item.ProductImage" alt="image" style="height: 40px"/></td>
+                        <td>@item.CategoryName</td>
+                        <td>@item.SupplierName</td>
+                        <td>
+                            <button data-toggle="ajax-modal" data-target="#addCourse" data-url='@Url.Action("UpdateProduct", new { id = item.ProductId })' class=" btn btn-sm btn-warning text-white"><i class="fa-solid fa-edit"></i></button>
+                            &nbsp;
+                            <a asp-action="DeleteWarehouse" asp-route-id="@item.ProductName" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6" class="text-center p-3">No Products found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

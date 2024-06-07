@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = null;
+}
+@model ProductViewModel
+
+<div class="modal fade" id="addCourse">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Add Product</h4>
+                <button type="button" class="btn-close" data-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form asp-action="AddProduct" method="post">
+                    <div class="form-group">
+                        <label asp-for="ProductName" class="form-label">Product Name</label>
+                        <input asp-for="ProductName" class="form-control" placeholder="Product Name" />
+                        <span asp-validation-for="ProductName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Price" class="form-label">Price</label>
+                        <input asp-for="Price" class="form-control" placeholder="Price" type="number" />
+                        <span asp-validation-for="Price" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ImageFile" class="form-label">Product Image</label>
+                        <input asp-for="ImageFile" class="form-control" placeholder="Product Image" type="file" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="CategoryId" class="form-label">Category</label>
+                        <select asp-for="CategoryId" class="form-select" >
+                            <option value="">Select a Category</option>
+                            @foreach(var item in ViewBag.Categories as IEnumerable<CategoryViewModel> ?? new List<CategoryViewModel>())
+                            {
+                                <option value="@item.CategoryID">@item.CategoryName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="CategoryId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="SupplierId" class="form-label">Supplier</label>
+                        <select asp-for="SupplierId" class="form-select">
+                            <option value="">Select a Supplier</option>
+                            @foreach (var item in ViewBag.Suppliers as IEnumerable<SupplierViewModel> ?? new List<SupplierViewModel>())
+                            {
+                                <option value="@item.SupplierId">@item.SupplierName</option>
+                            }
+                        </select>
+                        <span asp-validation-for="SupplierId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="ProductDescription" class="form-label">Product Description</label>
+                        <textarea asp-for="ProductDescription" class="form-control" placeholder="Product Description" rows="3"></textarea>
+                        <span asp-validation-for="ProductDescription" class="text-danger"></span>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" data-save="modal">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
