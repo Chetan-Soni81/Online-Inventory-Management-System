@@ -12,7 +12,7 @@
 </head>
 <body>
     <div class="wrapper">
-        <aside id="sidebar">
+        <aside id="sidebar" class="expand">
             <div class="d-flex">
                 <button id="toggle-btn" type="button">
                     <i class="fa-solid fa-bars"></i>
@@ -23,6 +23,12 @@
             </div>
             <ul class="sidebar-nav">
                 <li class="sidebar-item">
+                    <a class="sidebar-link" asp-controller="Admin" asp-action="index">
+                        <i class="fa-solid fa-table-columns"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
                     <a class="sidebar-link" asp-controller="Category" asp-action="index">
                         <i class="fa-solid fa-layer-group"></i>
                         <span>Category</span>
@@ -30,8 +36,14 @@
                 </li>
                 <li class="sidebar-item">
                     <a class="sidebar-link" asp-controller="Product" asp-action="Index">
-                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <i class="fa-solid fa-box"></i>
                         <span>Product</span>
+                    </a>
+                </li>
+                <li class="sidebar-item">
+                    <a class="sidebar-link" asp-controller="Stock" asp-action="Index">
+                        <i class="fa-solid fa-boxes-stacked"></i>
+                        <span>Stock</span>
                     </a>
                 </li>
                 <li class="sidebar-item">
@@ -94,6 +106,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/lib/chartjs/chart.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -29,7 +29,7 @@ builder.Services.AddTransient<ISupplierRepository, SupplierRepository>();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
     options =>
     {
-        options.LoginPath = new PathString("/~");
+        options.LoginPath = new PathString("/");
         options.ExpireTimeSpan = TimeSpan.FromMinutes(10);
     }
 );

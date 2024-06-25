@@ -30,13 +30,13 @@
                         <td>@item.ProductId</td>
                         <td>@item.ProductName</td>
                         <td>@item.Price</td>
-                        <td><img src="@item.ProductImage" alt="image" style="height: 40px"/></td>
+                        <td><img src="@item.ProductImage" alt="image" style="height: 50px"/></td>
                         <td>@item.CategoryName</td>
                         <td>@item.SupplierName</td>
                         <td>
                             <button data-toggle="ajax-modal" data-target="#addCourse" data-url='@Url.Action("UpdateProduct", new { id = item.ProductId })' class=" btn btn-sm btn-warning text-white"><i class="fa-solid fa-edit"></i></button>
                             &nbsp;
-                            <a asp-action="DeleteWarehouse" asp-route-id="@item.ProductName" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
+                            <a asp-action="DeleteProduct" asp-route-id="@item.ProductId" class="btn btn-sm btn-danger"><i class="fa-solid fa-trash"></i></a>
                         </td>
                     </tr>
                 }

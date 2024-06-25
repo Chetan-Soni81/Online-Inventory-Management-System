@@ -169,12 +169,30 @@ namespace OnlineInventory.Repositories.Product
                 return false;
             }
         }
+
+        public async Task<List<OptionViewModel>> GetProductList()
+        {
+            try
+            {
+                var options = await _context.Products.Select(s => new OptionViewModel
+                {
+                    Value= s.ProductId,
+                    Label= s.ProductName ?? ""
+                }).ToListAsync();
+
+                return options;
+            } catch
+            {
+                return new List<OptionViewModel>();
+            }
+        }
     }
     public interface IProductRepository
     {
         public int CountProducts();
 
         Task<List<ProductViewModel>> GetProducts();
+        Task<List<OptionViewModel>> GetProductList();
         Task<ProductViewModel?> GetProductById(int id);
         Task<List<ProductViewModel>> GetProductsByCategory(int id);
         Task<List<ProductViewModel>> GetProductsBySupplier(int id);

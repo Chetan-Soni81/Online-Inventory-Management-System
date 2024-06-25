@@ -1,4 +1,5 @@
-﻿using OnlineInventory.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using OnlineInventory.Models;
 using OnlineInventory.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -111,12 +112,31 @@ namespace OnlineInventory.Repositories.Warehouse
             }
         }
 
+        public async Task<List<OptionViewModel>> GetWarehouseList()
+        {
+            try
+            {
+                var options = await _context.Warehouses.Select(s => new OptionViewModel
+                {
+                    Value = s.WarehouseId,
+                    Label = s.WarehouseName ?? ""
+                }).ToListAsync();
+
+                return options;
+            }
+            catch
+            {
+                return new List<OptionViewModel>();
+            }
+        }
+
     }
 
     public interface IWarehouseRepository
     {
         public int Count();
         public List<WarehouseViewModel> GetAllWarehouses();
+        public Task<List<OptionViewModel>> GetWarehouseList();
         public WarehouseViewModel GetWarehouseById(int id);
         public Task<int> CreateWarehouse(WarehouseViewModel warehouse);
         public Task<int> UpdateWarehouse(WarehouseViewModel warehouse);

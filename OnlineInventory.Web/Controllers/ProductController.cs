@@ -50,11 +50,45 @@ namespace OnlineInventory.Web.Controllers
             return RedirectToAction("Index");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> UpdateProduct(int id)
+        {
+            ViewBag.Categories = _cateRepo.GetAllCategories();
+            ViewBag.Suppliers = await _suppRepo.GetSuppliers();
+            var product = await _repo.GetProductById(id);
+            return PartialView("_UpdateProduct", product);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProduct(ProductViewModel product)
+        {
+            if (!ModelState.IsValid)
+            {
+                return PartialView("_UpdateProduct", ModelState);
+            }
+
+            if (product.ImageFile != null)
+            {
+                DeleteImage(product.ProductImage);
+                product.ProductImage = await UploadImage(product.ImageFile, product.ProductName ?? "");
+            }
+            await _repo.UpdateProduct(product);
+
+            return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DeleteProduct(int id)
+        {
+            await _repo.DeleteProduct(id);
+            return RedirectToAction("Index");
+        }
         private async Task<string?> UploadImage(IFormFile file, string name)
         {
-            var filename = "product_" + string.Format("{0 : ddMMyyyyhhmmss}", DateTime.Now) + name.Replace(" ","") + Path.GetExtension(file.FileName);
+            var filename = "product_" + string.Format("{0 : ddMMyyyyhhmmss}", DateTime.Now) + name.Replace(" ", "") + Path.GetExtension(file.FileName);
 
-            if(!Directory.Exists(@"wwwroot\upload\product")) {
+            if (!Directory.Exists(@"wwwroot\upload\product"))
+            {
                 Directory.CreateDirectory(@"wwwroot\upload\product");
             }
 
@@ -65,7 +99,25 @@ namespace OnlineInventory.Web.Controllers
                 await file.CopyToAsync(fs);
             }
 
-            return Path.Combine(@"upload\product",filename);
+            return Path.Combine(@"upload\product", filename);
+        }
+
+        private bool DeleteImage(string filepath)
+        {
+            try
+            {
+
+                if (System.IO.File.Exists(@"wwwroot\" + filepath))
+                {
+                    System.IO.File.Delete(@"wwwroot\" + filepath);
+                }
+
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
     }
 }

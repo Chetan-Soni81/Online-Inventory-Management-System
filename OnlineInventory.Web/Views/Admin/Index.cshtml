@@ -6,17 +6,70 @@
 }
 @model HomeModel
 
-<div class="main p-3" id="mainFrame">
+<div class="main p-3 bg-light" id="mainFrame">
     <div class="w-100">
-        <section class="d-flex gap-3 box-shadow justify-content-center">
-            <div class="ratio-4x3 border rounded-3 p-3 banner">
+        <section class="row justify-content-evenly gap-3 mb-3">
+            <div class="col-5 col-md rounded-3 p-3 bg-white border">
+                <h6>Total Value</h6>
+                <h3>₹0</h3>
+            </div>
+            <div class="col-5 col-md rounded-3 p-3 bg-white">
                 <h6>Products</h6>
                 <h3>@Model.Products</h3>
             </div>
-            <div class="ratio-4x3 border rounded-3 p-3 banner">
+            <div class="col-5 col-md rounded-3 p-3 bg-white">
                 <h6>Categories</h6>
                 <h3>@Model.Categories</h3>
             </div>
+            <div class="col-5 col-md rounder-3 p-3 bg-white">
+                <h6>Warehouses</h6>
+                <h3>0</h3>
+            </div>
+        </section>
+
+        <section class="row bg-white p-3">
+            <canvas id="piechart" role="img"></canvas>
         </section>
     </div>
 </div>
+
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+            debugger;
+            const data = [
+                { year: "2020", count: 10 },
+                { year: "2021", count: 20 },
+                { year: "2022", count: 15 },
+                { year: "2023", count: 40 },
+                { year: "2024", count: 30 },
+            ];
+
+            const ctx = document.getElementById("piechart");
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: data.map(x => x.year),
+                    datasets: [{
+                        label: '# of Votes',
+                        data: data.map(x => x.count),
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: false
+                        }
+                    },
+                    radius: "80%",
+                    devicePixelRatio: 2
+                }
+                
+            });
+
+            ctx.style.height = "300px";
+            ctx.style.width = "auto";
+        });
+    </script>
+}
